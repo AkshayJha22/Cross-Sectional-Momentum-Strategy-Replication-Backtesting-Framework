@@ -1,3 +1,5 @@
+[![tests](https://github.com/AkshayJha22/Cross-Sectional-Momentum-Strategy-Replication-Backtesting-Framework/actions/workflows/tests.yml/badge.svg)](https://github.com/AkshayJha22/Cross-Sectional-Momentum-Strategy-Replication-Backtesting-Framework/actions/workflows/tests.yml)
+
 # Price Momentum and Trading Volume, 25 Years On
 
 A re-test of **Lee & Swaminathan (2000), "Price Momentum and Trading Volume", *Journal of Finance* 55(5)** on data
@@ -31,6 +33,13 @@ from neglected ones, which is why the momentum life-cycle (early vs late stage) 
 ```bash
 pip install -r requirements.txt
 streamlit run app.py
+```
+
+Tests (synthetic-data checks of the portfolio code, plus a smoke test that renders every tab of the app):
+
+```bash
+pip install pytest
+python -m pytest -q tests
 ```
 
 Everything the app needs is in the repo (about 8 MB). It also deploys as-is on
@@ -75,7 +84,7 @@ src/momvol/data.py          loaders for the panel and Ken French files
 src/momvol/paper.py         the paper's published numbers (Tables I, II, VII)
 scripts/build_panel.py      raw pystock-data archives -> data/panel_monthly.parquet
 scripts/run_analysis.py     precomputes the J x K grid, alphas, event-time tables -> results/
-tests/                      synthetic-data tests (balanced buckets, known spread, no look-ahead)
+tests/                      synthetic-data tests (balanced buckets, known spread, no look-ahead), app smoke test
 ```
 
 ## What changed from the first version
@@ -91,3 +100,13 @@ in the git history.
 
 Lee, C. M. C., & Swaminathan, B. (2000). Price Momentum and Trading Volume. *Journal of Finance*, 55(5), 2017-2069.
 https://doi.org/10.1111/0022-1082.00280
+
+## License
+
+Code: MIT (see [LICENSE](LICENSE)).
+
+Data: `data/panel_monthly.parquet` is built from [eliangcs/pystock-data](https://github.com/eliangcs/pystock-data),
+which is licensed CC BY-SA 4.0, so the panel is shared under the same licence
+([CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)), with credit to that project. The files in
+`data/french/` come from the [Kenneth R. French Data Library](https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html)
+and remain subject to its terms; they are included so the app runs offline.
